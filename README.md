@@ -12,6 +12,18 @@ https://expressjs.com/ko/
 
 방향을 잡는 것, 즉 사용자들의 path마다 적당한 응답을 해주는 것
 
+https://expressjs.com/ko/guide/routing.html
+
+    app.get("/page/:pageId", (request, response) => {
+        response.send(request.params);
+    });
+
+request.params는 page/CSS 로 접속 할 경우 밑과 같이 나타난다.
+
+    {
+        "pageId": "CSS"
+    }
+
 ## express 문법
 
     response.writeHead(200);
