@@ -1,8 +1,23 @@
+const fs = require("fs");
+const template = require("./lib/template");
 const express = require("express");
 const app = express();
 const port = 3000;
 
-app.get("/", (req, res) => res.send("Hello World!"));
+app.get("/", (request, response) => {
+  fs.readdir("./data", (error, filelist) => {
+    const title = "Welcome";
+    const description = "Hello, Node.js";
+    const list = template.list(filelist);
+    const html = template.HTML(
+      title,
+      list,
+      `<h2>${title}</h2>${description}`,
+      `<a href="/create">create</a>`
+    );
+    response.send(html);
+  });
+});
 
 app.get("/page", (req, res) => res.send("/page!"));
 
