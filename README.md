@@ -32,3 +32,10 @@ request.params는 page/CSS 로 접속 할 경우 밑과 같이 나타난다.
     response.send(html)
 
 express에서는 send로 한번에 처리 가능하다.
+
+## get, post
+
+    app.get('path', callback());
+    app.post('path', callback());
+
+get 방식과 post 방식
