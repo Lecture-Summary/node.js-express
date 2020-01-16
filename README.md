@@ -39,3 +39,7 @@ express에서는 send로 한번에 처리 가능하다.
     app.post('path', callback());
 
 get 방식과 post 방식
+
+## express에서의 redirect
+
+    response.redirect("/");
