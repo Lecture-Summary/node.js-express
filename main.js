@@ -1,11 +1,15 @@
 const fs = require("fs");
 const path = require("path");
 const qs = require("querystring");
+const express = require("express");
+const bodyParser = require("body-parser");
 const sanitizeHtml = require("sanitize-html");
 const template = require("./lib/template");
-const express = require("express");
+
 const app = express();
 const port = 3000;
+
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get("/", (request, response) => {
   fs.readdir("./data", (error, filelist) => {
@@ -25,7 +29,7 @@ app.get("/", (request, response) => {
 app.get("/page/:pageId", (request, response) => {
   fs.readdir("./data", (error, filelist) => {
     const filteredId = path.parse(request.params.pageId).base;
-    fs.readFile(`data/${filteredId}`, "utf8", function(err, description) {
+    fs.readFile(`data/${filteredId}`, "utf8", (err, description) => {
       const title = request.params.pageId;
       const sanitizedTitle = sanitizeHtml(title);
       const sanitizedDescription = sanitizeHtml(description, {
@@ -49,7 +53,7 @@ app.get("/page/:pageId", (request, response) => {
 });
 
 app.get("/create", (request, response) => {
-  fs.readdir("./data", function(error, filelist) {
+  fs.readdir("./data", (error, filelist) => {
     const title = "WEB - create";
     const list = template.list(filelist);
     const html = template.HTML(
@@ -73,25 +77,33 @@ app.get("/create", (request, response) => {
 });
 
 app.post("/create_process", (request, response) => {
-  let body = "";
-  request.on("data", function(data) {
-    body = body + data;
+  const post = request.body;
+  const title = post.title;
+  const description = post.description;
+  fs.writeFile(`data/${title}`, description, "utf8", err => {
+    response.redirect(`/page/${title}`);
   });
-  request.on("end", function() {
+});
+/*
+  let body = "";
+  request.on("data", data => {
+    body += data;
+  });
+  request.on("end", () => {
     const post = qs.parse(body);
     const title = post.title;
     const description = post.description;
     fs.writeFile(`data/${title}`, description, "utf8", function(err) {
-      response.writeHead(302, { Location: `/?id=${title}` });
-      response.end();
+      response.redirect(`/page/${title}`);
     });
   });
 });
+*/
 
 app.get("/update/:pageId", (request, response) => {
-  fs.readdir("./data", function(error, filelist) {
+  fs.readdir("./data", (error, filelist) => {
     const filteredId = path.parse(request.params.pageId).base;
-    fs.readFile(`data/${filteredId}`, "utf8", function(err, description) {
+    fs.readFile(`data/${filteredId}`, "utf8", (err, description) => {
       const title = request.params.pageId;
       const list = template.list(filelist);
       const html = template.HTML(
@@ -117,70 +129,24 @@ app.get("/update/:pageId", (request, response) => {
 });
 
 app.post("/update_process", (request, response) => {
-  let body = "";
-  request.on("data", data => {
-    body = body + data;
-  });
-  request.on("end", () => {
-    const post = qs.parse(body);
-    const id = post.id;
-    const title = post.title;
-    const description = post.description;
-    fs.rename(`data/${id}`, `data/${title}`, function(error) {
-      fs.writeFile(`data/${title}`, description, "utf8", function(err) {
-        response.redirect(`/page/${title}`);
-      });
+  const post = request.body;
+  const id = post.id;
+  const title = post.title;
+  const description = post.description;
+  fs.rename(`data/${id}`, `data/${title}`, error => {
+    fs.writeFile(`data/${title}`, description, "utf8", err => {
+      response.redirect(`/page/${title}`);
     });
   });
 });
 
 app.post("/delete_process", (request, response) => {
-  let body = "";
-  request.on("data", function(data) {
-    body = body + data;
-  });
-  request.on("end", function() {
-    const post = qs.parse(body);
-    const id = post.id;
-    const filteredId = path.parse(id).base;
-    fs.unlink(`data/${filteredId}`, function(error) {
-      response.redirect("/");
-    });
+  const post = request.body;
+  const id = post.id;
+  const filteredId = path.parse(id).base;
+  fs.unlink(`data/${filteredId}`, error => {
+    response.redirect("/");
   });
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
-
-/* var http = require('http');
-var fs = require('fs');
-var url = require('url');
-var qs = require('querystring');
-var template = require('./lib/template.js');
-var path = require('path');
-var sanitizeHtml = require('sanitize-html');
-
-var app = http.createServer(function(request,response){
-    var _url = request.url;
-    var queryData = url.parse(_url, true).query;
-    var pathname = url.parse(_url, true).pathname;
-    if(pathname === '/'){
-      if(queryData.id === undefined){
-      } else {
-      }
-    } else if(pathname === '/create'){
-
-    } else if(pathname === '/create_process'){
-
-    } else if(pathname === '/update'){
-
-    } else if(pathname === '/update_process'){
-
-    } else if(pathname === '/delete_process'){
-
-    } else {
-      response.writeHead(404);
-      response.end('Not found');
-    }
-});
-app.listen(3000);
- */

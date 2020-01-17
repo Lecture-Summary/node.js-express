@@ -43,3 +43,19 @@ get 방식과 post 방식
 ## express에서의 redirect
 
     response.redirect("/");
+
+## 미들웨어
+
+https://expressjs.com/ko/resources/middleware.html
+
+http://expressjs.com/en/resources/middleware/body-parser.html
+
+    npm install --save body-parser
+
+    app.use(bodyParser.urlencoded({ extended: false }));
+
+main.js 가 실행될 때마다 위 코드에 의해서 만들어진 미들웨어가 실행된다.
+
+    const post = request.body;
+
+body-parser 를 이용하여 post된 데이터를 쉽게 받을 수 있다.
