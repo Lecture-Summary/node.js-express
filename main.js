@@ -3,6 +3,7 @@ const path = require("path");
 const qs = require("querystring");
 const express = require("express");
 const bodyParser = require("body-parser");
+const compression = require("compression");
 const sanitizeHtml = require("sanitize-html");
 const template = require("./lib/template");
 
@@ -10,6 +11,7 @@ const app = express();
 const port = 3000;
 
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(compression());
 
 app.get("/", (request, response) => {
   fs.readdir("./data", (error, filelist) => {

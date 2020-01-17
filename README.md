@@ -59,3 +59,8 @@ main.js 가 실행될 때마다 위 코드에 의해서 만들어진 미들웨�
     const post = request.body;
 
 body-parser 를 이용하여 post된 데이터를 쉽게 받을 수 있다.
+
+    const compression = require('compression');
+    app.use(compression());
+
+데이터를 압축하는 미들웨어
