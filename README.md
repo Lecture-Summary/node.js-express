@@ -64,3 +64,9 @@ body-parser 를 이용하여 post된 데이터를 쉽게 받을 수 있다.
     app.use(compression());
 
 데이터를 압축하는 미들웨어
+
+## 미들웨어 만들기
+
+    app.get('*', (request, response, next) => {
+
+get 방식으로 들어오는 모든 데이터에 대해 실행한다.
