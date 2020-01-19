@@ -10,6 +10,7 @@ const template = require("./lib/template");
 const app = express();
 const port = 3000;
 
+app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(compression());
 app.get("*", (request, response, next) => {
@@ -26,7 +27,10 @@ app.get("/", (request, response) => {
   const html = template.HTML(
     title,
     list,
-    `<h2>${title}</h2>${description}`,
+    `
+    <h2>${title}</h2>${description}
+    <img src="/images/hello.jpg" style="width:300px; display:block; margin-top:10px;">
+    `,
     `<a href="/create">create</a>`
   );
   response.send(html);

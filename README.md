@@ -70,3 +70,11 @@ body-parser 를 이용하여 post된 데이터를 쉽게 받을 수 있다.
     app.get('*', (request, response, next) => {
 
 get 방식으로 들어오는 모든 데이터에 대해 실행한다.
+
+## 정적인 파일의 서비스
+
+https://expressjs.com/en/starter/static-files.html
+
+    app.use(express.static('public'));
+
+public 안에서 static 파일을 찾겠다는 뜻
