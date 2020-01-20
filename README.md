@@ -78,3 +78,13 @@ https://expressjs.com/en/starter/static-files.html
     app.use(express.static('public'));
 
 public 안에서 static 파일을 찾겠다는 뜻
+
+## 에러처리
+
+https://expressjs.com/ko/starter/faq.html
+
+    app.use((req, res, next) => {
+        res.status(404).send("Sorry cant find that!");
+    });
+
+http://expressjs.com/en/guide/error-handling.html
