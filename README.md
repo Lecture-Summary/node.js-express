@@ -88,3 +88,18 @@ https://expressjs.com/ko/starter/faq.html
     });
 
 http://expressjs.com/en/guide/error-handling.html
+
+## 보안
+
+https://expressjs.com/en/advanced/best-practice-security.html
+
+https://expressjs.com/en/advanced/best-practice-security.html#use-helmet
+
+    npm install --save helmet
+
+보안과 관련된 여러가지 이슈들을 자동으로 처리해준다.
+
+    npm i nsp -g
+    nsp check
+
+dependencies의 취약점을 검사한다.
