@@ -13,7 +13,13 @@ app.use(
 );
 
 app.get("/", function(req, res, next) {
-  res.send("Hello Session");
+  console.log(req.session);
+  if (req.session.num === undefined) {
+    req.session.num = 1;
+  } else {
+    req.session.num += 1;
+  }
+  res.send(`Views : ${req.session.num}`);
 });
 
 app.listen(3000, function() {
