@@ -5,6 +5,12 @@ const fs = require("fs");
 const sanitizeHtml = require("sanitize-html");
 const template = require("../lib/template");
 
+const authData = {
+  email: "egoing777@gmail.com",
+  password: "111111",
+  nickname: "egoing"
+};
+
 router.get("/login", (request, response) => {
   const title = "WEB - login";
   const list = template.list(request.list);
@@ -23,6 +29,18 @@ router.get("/login", (request, response) => {
     ""
   );
   response.send(html);
+});
+
+router.post("/login_process", (request, response) => {
+  const post = request.body;
+  const email = post.email;
+  const pwd = post.pwd;
+  if (email === authData.email && pwd === authData.password) {
+    response.send("Welcome");
+  } else {
+    response.send("Who?");
+  }
+  //response.redirect(`/topic/${title}`);
 });
 
 /* router.get("/create", (request, response) => {
