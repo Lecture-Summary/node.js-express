@@ -36,11 +36,12 @@ router.post("/login_process", (request, response) => {
   const email = post.email;
   const pwd = post.pwd;
   if (email === authData.email && pwd === authData.password) {
-    response.send("Welcome");
+    request.session.is_logined = true;
+    request.session.nickname = authData.nickname;
+    response.redirect(`/`);
   } else {
     response.send("Who?");
   }
-  //response.redirect(`/topic/${title}`);
 });
 
 /* router.get("/create", (request, response) => {

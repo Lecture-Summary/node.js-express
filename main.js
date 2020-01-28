@@ -8,7 +8,18 @@ const port = 3000;
 const indexRouter = require("./routes/index");
 const topicRouter = require("./routes/topic");
 const authRouter = require("./routes/auth");
+const session = require("express-session");
+const FileStore = require("session-file-store")(session);
 app.use(helmet());
+
+app.use(
+  session({
+    secret: "keyboard cat",
+    resave: false,
+    saveUninitialized: true,
+    store: new FileStore()
+  })
+);
 
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: false }));
