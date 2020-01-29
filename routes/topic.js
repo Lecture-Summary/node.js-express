@@ -7,6 +7,10 @@ const template = require("../lib/template");
 const auth = require("../lib/auth");
 
 router.get("/create", (request, response) => {
+  if (!auth.isOwner(request, response)) {
+    response.redirect("/");
+    return false;
+  }
   const title = "WEB - create";
   const list = template.list(request.list);
   const html = template.HTML(
@@ -30,6 +34,10 @@ router.get("/create", (request, response) => {
 });
 
 router.post("/delete_process", (request, response) => {
+  if (!auth.isOwner(request, response)) {
+    response.redirect("/");
+    return false;
+  }
   const post = request.body;
   const id = post.id;
   const filteredId = path.parse(id).base;
@@ -39,6 +47,10 @@ router.post("/delete_process", (request, response) => {
 });
 
 router.get("/update/:pageId", (request, response) => {
+  if (!auth.isOwner(request, response)) {
+    response.redirect("/");
+    return false;
+  }
   const filteredId = path.parse(request.params.pageId).base;
   fs.readFile(`data/${filteredId}`, "utf8", (err, description) => {
     const title = request.params.pageId;
@@ -66,6 +78,10 @@ router.get("/update/:pageId", (request, response) => {
 });
 
 router.post("/update_process", (request, response) => {
+  if (!auth.isOwner(request, response)) {
+    response.redirect("/");
+    return false;
+  }
   const post = request.body;
   const id = post.id;
   const title = post.title;
@@ -78,6 +94,10 @@ router.post("/update_process", (request, response) => {
 });
 
 router.post("/create_process", (request, response) => {
+  if (!auth.isOwner(request, response)) {
+    response.redirect("/");
+    return false;
+  }
   const post = request.body;
   const title = post.title;
   const description = post.description;
