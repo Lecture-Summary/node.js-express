@@ -29,3 +29,9 @@ saveUninitialized : 세션이 필요하기 전까지는 세션을 구동시키�
 https://www.npmjs.com/package/session-file-store
 
     npm install -s session-file-store
+
+    request.session.save(function() {
+      response.redirect(`/`);
+    });
+
+session store에 저장되는 작업이 완료되기 전까지는 redirect를 하지않고 기다린다.
