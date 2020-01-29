@@ -1,8 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const path = require("path");
-const fs = require("fs");
-const sanitizeHtml = require("sanitize-html");
 const template = require("../lib/template");
 
 const authData = {
@@ -38,7 +36,7 @@ router.post("/login_process", (request, response) => {
   if (email === authData.email && pwd === authData.password) {
     request.session.is_logined = true;
     request.session.nickname = authData.nickname;
-    request.session.save(function() {
+    request.session.save(() => {
       response.redirect(`/`);
     });
   } else {
