@@ -29,7 +29,7 @@ router.get("/login", (request, response) => {
   response.send(html);
 });
 
-router.post("/login_process", (request, response) => {
+/* router.post("/login_process", (request, response) => {
   const post = request.body;
   const email = post.email;
   const pwd = post.pwd;
@@ -42,7 +42,7 @@ router.post("/login_process", (request, response) => {
   } else {
     response.send("Who?");
   }
-});
+}); */
 
 router.get("/logout", (request, response) => {
   request.session.destroy(err => {

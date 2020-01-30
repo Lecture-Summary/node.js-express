@@ -24,6 +24,14 @@ app.use(
   })
 );
 
+app.post(
+  "/auth/login_process",
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/auth/login"
+  })
+);
+
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(compression());
