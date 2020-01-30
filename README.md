@@ -1,37 +1,14 @@
-# Express Session
+# Express Passport
 
-생활코딩 Express Session
+생활코딩 Express Passport
 
-## 설치
+##
 
-https://github.com/expressjs/session
-https://expressjs.com/en/resources/middleware/session.html
+http://www.passportjs.org/ - 홈페이지
 
-    npm install -s express-session
+    npm install -s passport
+    npm install passport-local
 
-## 옵션
+local 방식으로 할 때 passport-local
 
-    app.use(session({
-        secret: "keyboard cat",
-        resave: false,
-        saveUninitialized: true
-        })
-    );
-
-session 함수의 매개변수 객체의 secret 부분은 버젼관리를 할 때 따로 관리해줘야한다.
-
-saveUninitialized : 세션이 필요하기 전까지는 세션을 구동시키지 않는다.(false일 시 무조건 구동시킨다. 서버에 큰 부담)
-
-## 세션 저장소
-
-세션 데이터의 저장소를 세션 저장소라고 한다.
-
-https://www.npmjs.com/package/session-file-store
-
-    npm install -s session-file-store
-
-    request.session.save(function() {
-      response.redirect(`/`);
-    });
-
-session store에 저장되는 작업이 완료되기 전까지는 redirect를 하지않고 기다린다.
+passport에 대한 모든 코드는 session을 사용하기때문에 app.use(session()) 밑에 작성해주어야한다.
