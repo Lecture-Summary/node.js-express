@@ -3,12 +3,6 @@ const router = express.Router();
 const path = require("path");
 const template = require("../lib/template");
 
-const authData = {
-  email: "egoing777@gmail.com",
-  password: "111111",
-  nickname: "egoing"
-};
-
 router.get("/login", (request, response) => {
   const title = "WEB - login";
   const list = template.list(request.list);
