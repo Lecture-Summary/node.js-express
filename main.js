@@ -24,6 +24,16 @@ app.use(
   })
 );
 
+app.use(express.static("public"));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(compression());
+app.get("*", (request, response, next) => {
+  fs.readdir("./data", (error, filelist) => {
+    request.list = filelist;
+    next();
+  });
+});
+
 passport.use(
   new LocalStrategy(
     {
@@ -33,15 +43,15 @@ passport.use(
     function(username, password, done) {
       console.log("LocalStrategy", username, password);
       /*       User.findOne({ username: username }, function (err, user) {
-      if (err) { return done(err); }
-      if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
-      }
-      if (!user.validPassword(password)) {
-        return done(null, false, { message: 'Incorrect password.' });
-      }
-      return done(null, user);
-    }); */
+        if (err) { return done(err); }
+        if (!user) {
+          return done(null, false, { message: 'Incorrect username.' });
+        }
+        if (!user.validPassword(password)) {
+          return done(null, false, { message: 'Incorrect password.' });
+        }
+        return done(null, user);
+      }); */
     }
   )
 );
@@ -53,16 +63,6 @@ app.post(
     failureRedirect: "/auth/login"
   })
 );
-
-app.use(express.static("public"));
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(compression());
-app.get("*", (request, response, next) => {
-  fs.readdir("./data", (error, filelist) => {
-    request.list = filelist;
-    next();
-  });
-});
 
 app.use("/", indexRouter);
 app.use("/topic", topicRouter);
